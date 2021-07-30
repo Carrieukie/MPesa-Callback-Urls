@@ -1,10 +1,8 @@
 const express = require ('express')
-var bodyParser = require('body-parser')
+const bodyParser = require('body-parser')
 
 const app = express()
-app.use(bodyParser.json({ type: 'application/*+json' }))
-
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
 
 const port = process.env.port || 3000
 
@@ -12,7 +10,7 @@ app.get("/" , (req, res) => res.send("Hello world"))
 
 app.post('/confirmation', (req, res) => {
     console.log('....................... confirmation .............')
-    console.log(req.body)
+    console.log(JSON.stringify(req.body))
 
     var sqlite3 = require('sqlite3').verbose();
     var db = new sqlite3.Database(':memory:');
@@ -21,7 +19,7 @@ app.post('/confirmation', (req, res) => {
     db.run("CREATE TABLE lorem (info TEXT)");
 
     var stmt = db.prepare("INSERT INTO lorem VALUES (?)");
-    stmt.run("Ipsum " + req.body);
+    stmt.run("Ipsum " + JSON.stringify(req.body));
     stmt.finalize();
 
     db.each("SELECT rowid AS id, info FROM lorem", function(err, row) {
