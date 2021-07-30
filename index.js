@@ -17,7 +17,7 @@ db.run("CREATE TABLE IF NOT EXISTS status (info TEXT)");
 app.get("/" , (req, res) => res.send("Hello world"))
 
 app.post('/confirmation', (req, res) => {
-    console.log('....................... confirmation .............')
+    console.log('....................... confirmation ................... ')
     var body = JSON.stringify(req.body)
 
     console.log(body)
