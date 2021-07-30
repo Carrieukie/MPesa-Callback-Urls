@@ -12,7 +12,7 @@ var db = new sqlite3.Database(':memory:');
 db.serialize(function() {
 db.run("CREATE TABLE IF NOT EXISTS confirmation (info TEXT)");
 db.run("CREATE TABLE IF NOT EXISTS validation (info TEXT)");
-
+db.run("CREATE TABLE IF NOT EXISTS status (info TEXT)");
 
 app.get("/" , (req, res) => res.send("Hello world"))
 
@@ -61,6 +61,26 @@ app.post('/validation', (req, res) => {
     });
 });
 
+app.post('/status', (req, res) => {
+    console.log('....................... status .......................')
+
+    var body = JSON.stringify(req.body)
+    console.log(body)
+
+
+    if(body.length > 3){
+        var stmt = db.prepare("INSERT INTO status VALUES (?)");
+        stmt.run("Ipsum " + body);
+        stmt.finalize();
+    }
+
+
+    db.all("SELECT * FROM status", function(err, row) {
+         console.log(err)
+         console.log(row)
+         res.send(row)
+    });
+});
 
 app.listen(process.env.PORT || 3000 , () => {
     console.log("App listening on port " + port)
