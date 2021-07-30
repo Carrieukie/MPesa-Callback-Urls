@@ -14,6 +14,6 @@ app.post('/validation', (req, resp) => {
     console.log(req.body)
 })
 
-app.listen(port , () => {
+app.listen(process.env.port || 3000 , () => {
     console.log("App listening on port" + port)
 })
