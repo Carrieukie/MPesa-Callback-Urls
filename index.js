@@ -17,7 +17,7 @@ db.run("CREATE TABLE IF NOT EXISTS validation (info TEXT)");
 db.run("CREATE TABLE IF NOT EXISTS status (info TEXT)");
 });
 
-app.get("/" , (req, res) => res.send("On this api send an empty POST request to /confirmation to get any send sent to confimation url \n /validation for sent for validation url \n /status for transaction query status"))
+app.get("/" , (req, res) => res.send("On this api send an empty POST request to /confirmation for confirmation  \n /validation for validation \n /status for transaction query status"))
 
 app.post('/confirmation', (req, res) => {
     console.log('....................... confirmation ................... ')
@@ -76,6 +76,8 @@ app.post('/status', (req, res) => {
         stmt.run("Ipsum " + body);
         stmt.finalize();
     }
+
+
 
     //Fetch everything from the database from the confrimation table
     db.all("SELECT * FROM status", function(err, row) {
