@@ -81,9 +81,13 @@ app.post('/status', (req, res) => {
 
     //Fetch everything from the database from the confrimation table
     db.all("SELECT * FROM status", function(err, row) {
-         console.log(err)
-         console.log(row)
-         res.send(row)
+    
+         if(err){
+             res.send(err)
+         }else{
+            res.send(row)
+         }
+
     });
 });
 
