@@ -19,7 +19,7 @@ db.run("CREATE TABLE IF NOT EXISTS status (info TEXT)");
 
 app.get("/" , (req, res) => res.send("On this api send an empty POST request to /confirmation for confirmation  \n /validation for validation \n /status for transaction query status"))
 
-app.post('/confirmation', (req, res) => {
+app.post('/confirm', (req, res) => {
     console.log('....................... confirmation ................... ')
     var body = JSON.stringify(req.body)
 
@@ -43,7 +43,7 @@ app.post('/confirmation', (req, res) => {
 
 
 
-app.post('/validation', (req, res) => {
+app.post('/validate', (req, res) => {
     console.log('....................... validation .......................')
 
     var body = JSON.stringify(req.body)
@@ -65,19 +65,20 @@ app.post('/validation', (req, res) => {
 });
 
 app.post('/status', (req, res) => {
+
     console.log('....................... status .......................')
 
+    //Get the request body
     var body = JSON.stringify(req.body)
     console.log(body)
 
     //This is to avoid empty columns in the database
+    //Insert the body into database if there's any
     if(body.length > 3){
         var stmt = db.prepare("INSERT INTO status VALUES (?)");
-        stmt.run("Ipsum " + body);
+        stmt.run("Status " + body);
         stmt.finalize();
     }
-
-
 
     //Fetch everything from the database from the confrimation table
     db.all("SELECT * FROM status", function(err, row) {
